@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 
-public class PlayButton extends JMenuItem
+public class StopButton extends JMenuItem
 {
     public static DrawPanel pane;
 
@@ -19,7 +19,7 @@ public class PlayButton extends JMenuItem
     /**
      * Constructor
      */
-    public PlayButton()
+    public StopButton()
     {
         initComponents();
     }
@@ -30,10 +30,10 @@ public class PlayButton extends JMenuItem
     public void initComponents()
     {
 //        setPreferredSize(new Dimension(100, 100));
-        setText("Run");
+        setText("Stop");
         addActionListener(new ButtonListener());
         Border blackline1 = BorderFactory.createTitledBorder("Simulation");
-       
+
         pane= new DrawPanel();
         pane.setBorder(blackline1);
         pane.setBounds(50,200,1300,560);
@@ -47,18 +47,18 @@ public class PlayButton extends JMenuItem
         @Override
         public void actionPerformed(ActionEvent evt)
         {
-//            if(!DrawPanelRunner.isStopped)
-//            {
-//                setText("Run");
-//                DrawPanelRunner.stop();
-//                repaint();
-//            }
-            if(DrawPanelRunner.isStopped)
+            if(!DrawPanelRunner.isStopped)
             {
-//                setText("Stop");
-                DrawPanelRunner.start();
+//                setText("Run");
+                DrawPanelRunner.stop();
                 repaint();
             }
+//            else if(DrawPanelRunner.isStopped)
+//            {
+////                setText("Stop");
+//                DrawPanelRunner.start();
+//                repaint();
+//            }
 
         }
     }
