@@ -41,7 +41,7 @@ public class Main implements ActionListener {
             // if the user selects a file
             if (r == JFileChooser.APPROVE_OPTION) {
                 // set the label to the path of the selected file
-                label.setText(j.getSelectedFile().getAbsolutePath());
+                label.setText("File Chosen:"+j.getSelectedFile().getAbsolutePath());
                 File tspFile= new File(j.getSelectedFile().getAbsolutePath());
                 try {
                     BufferedReader br = new BufferedReader(new FileReader(tspFile));

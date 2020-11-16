@@ -2,13 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d872e9fa-2d1f-44e3-9385-8068e109dfd5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/StopButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assign2/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assign2/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Assign2/PlayButton.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Assign2/PlayButton.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PlayButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlayButton.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,7 +22,7 @@
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="444">
-              <caret line="134" column="31" selection-start-line="134" selection-start-column="31" selection-end-line="134" selection-end-column="31" />
+              <caret line="134" column="32" selection-start-line="134" selection-start-column="32" selection-end-line="134" selection-end-column="32" />
               <folding>
                 <element signature="e#0#4321#0" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -270,6 +266,14 @@
       <option name="presentableId" value="Default" />
       <updated>1600144387919</updated>
     </task>
+    <task id="LOCAL-00001" summary="Basic Assignment without drawing abilities">
+      <created>1605489951344</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1605489951344</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -303,6 +307,10 @@
       <window_info anchor="right" id="Capture Analysis" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
     </layout>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Basic Assignment without drawing abilities" />
+    <option name="LAST_COMMIT_MESSAGE" value="Basic Assignment without drawing abilities" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/DrawLine.java" />
@@ -401,7 +409,7 @@
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="444">
-          <caret line="134" column="31" selection-start-line="134" selection-start-column="31" selection-end-line="134" selection-end-column="31" />
+          <caret line="134" column="32" selection-start-line="134" selection-start-column="32" selection-end-line="134" selection-end-column="32" />
           <folding>
             <element signature="e#0#4321#0" expanded="true" />
             <element signature="imports" expanded="true" />
