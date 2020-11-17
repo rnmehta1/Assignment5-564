@@ -25,7 +25,8 @@ public class Main implements ActionListener {
     public static JLabel countLabel;
     static JTextField source;
     static JMenuBar menuBar;
-    static JMenu fileMenu,projectMenu;
+    static JDialog d;
+    static JMenu fileMenu,projectMenu, about;
     static JMenuItem open,save,newProject,run,stop;
     TSPSolver tspSolver;
     TSPNearestNeighbour solve;
@@ -142,6 +143,24 @@ public class Main implements ActionListener {
 
         menuBar.add(projectMenu);
 
+        about= new JMenu("About");
+
+        about.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                final JPopupMenu popup = new JPopupMenu();
+                popup.add(new JMenuItem(new AbstractAction("The team - Ria Mehta ; Anurag Mishra ; Akshay Dileep Kumar") {
+                    public void actionPerformed(ActionEvent e) {
+
+                        JOptionPane.showMessageDialog(frame, "Ria Mehta - MS Software Engineering \nAnurag Mishra - MSC Software Engineering " +
+                                "\nAkshay Dileep Kumar - MS Software Engineering");
+                    }
+                }));
+                popup.show(e.getComponent(), e.getX(), e.getY());
+            }});
+
+//        about.addActionListener(aboutListener);
+
+        menuBar.add(about);
 
         frame.setJMenuBar(menuBar);
 
