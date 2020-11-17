@@ -123,7 +123,6 @@ public class Main implements ActionListener {
             public void actionPerformed(ActionEvent event) {
 
                 pressedNew=true;
-
                 pane.repaint();
 
             }
