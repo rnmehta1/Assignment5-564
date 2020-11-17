@@ -41,7 +41,7 @@ class DrawPanelRunner implements Runnable  {
 
                 while (isStopped) {
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                     }
                 }

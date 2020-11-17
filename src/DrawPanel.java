@@ -103,29 +103,33 @@ class DrawPanel extends JPanel implements MouseListener {
     @Override
     public void paintComponent(Graphics g) {
 
-        gthis=g;
-        super.paintComponent(g);
-        doDrawing(gthis);
-        drawLines(gthis);
+        if(Main.pressedNew==false) {
+            gthis = g;
+            super.paintComponent(g);
+            doDrawing(gthis);
+            drawLines(gthis);
 
-        // If user has chosen a point, paint a small dot on top.
+            // If user has chosen a point, paint a small dot on top.
 
-        if (point != null) {
-            gthis.fillRect(point.x - 3, point.y - 3, 7, 7);
-        }
-        try {
-            File f1 = new File("newPoints.txt");
-            Scanner myReader = new Scanner(f1);
-            while (myReader.hasNextLine()) {
-                line = myReader.nextLine();
-                lines.add(line);
-                int pointx, pointy;
-                pointx = Integer.parseInt(line.split(" ")[0]);
-                pointy = Integer.parseInt(line.split(" ")[1]);
-                gthis.fillRect(pointx - 3, pointy - 3, 7, 7);
+            if (point != null) {
+                gthis.fillRect(point.x - 3, point.y - 3, 7, 7);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
+            try {
+                File f1 = new File("newPoints.txt");
+                Scanner myReader = new Scanner(f1);
+                while (myReader.hasNextLine()) {
+                    line = myReader.nextLine();
+                    lines.add(line);
+                    int pointx, pointy;
+                    pointx = Integer.parseInt(line.split(" ")[0]);
+                    pointy = Integer.parseInt(line.split(" ")[1]);
+                    gthis.fillRect(pointx - 3, pointy - 3, 7, 7);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        } else {
+            Main.pressedNew=false;
         }
     }
 

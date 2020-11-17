@@ -19,7 +19,6 @@ import javax.swing.filechooser.*;
 public class Main implements ActionListener {
     static JLabel label;
     public static DrawPanelRunner runner;
-    public static JLabel distLabel;
     public static DrawPanel pane;
 //    static PlayButton playButton;
     public static JFrame frame;
@@ -42,7 +41,7 @@ public class Main implements ActionListener {
             // if the user selects a file
             if (r == JFileChooser.APPROVE_OPTION) {
                 // set the label to the path of the selected file
-                label.setText("File Chosen:"+j.getSelectedFile().getAbsolutePath());
+                label.setText("Last File Chosen:"+j.getSelectedFile().getAbsolutePath());
                 File tspFile= new File(j.getSelectedFile().getAbsolutePath());
                 try {
                     BufferedReader br = new BufferedReader(new FileReader(tspFile));
@@ -57,7 +56,6 @@ public class Main implements ActionListener {
                     pane.setCityQueue(solve.cityQueue);
                     runner.setNumC(solve.cityQueue.size()+solve.newdotCount);
                     pane.repaint();
-                    distLabel.setText("Total Distance Travelled:"+solve.getDistance());
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -123,15 +121,10 @@ public class Main implements ActionListener {
         ActionListener newListener = new ActionListener() {
             public void actionPerformed(ActionEvent event) {
 
-                Thread.currentThread().stop();
-
                 pressedNew=true;
-                runner = new DrawPanelRunner(pane);
-                frame.setVisible(true);
-                Thread t2 = new Thread(runner, "T2");
-                System.out.println("Thread is starting 2");
-                t2.start();
-                frame.repaint();
+
+                pane.repaint();
+
             }
         };
 
@@ -155,15 +148,9 @@ public class Main implements ActionListener {
         label = new JLabel("no file selected");
         label.setBounds(50, 40, 500, 40);
 
-        distLabel = new JLabel();       //To display the total distance travelled
-        distLabel.setBounds(550, 90, 500, 40);
-
         countLabel= new JLabel();    //To display the Iterations
         countLabel.setBounds(550, 130, 500, 40);
 
-//        JButton openButton = new JButton("Open File");//creating instance of JButton open button
-//        openButton.setBounds(50, 90, 100, 40);//x axis, y axis, width, height
-//        openButton.addActionListener(mainClass);
 
         JLabel sourceLabel = new JLabel("Choose Source City:");
         sourceLabel.setBounds(50,90,130,40);
@@ -177,19 +164,14 @@ public class Main implements ActionListener {
         pane= new DrawPanel();
         pane.setBorder(blackline1);
         pane.setBounds(50,200,1300,560);
-//        playButton= new PlayButton();
-//        playButton.setBounds(50, 140, 100, 40);
-//        playButton.setVisible(true);
+
         //Add all the Swing Components to JFrame
         frame.add(countLabel);
-//        frame.add(playButton);
         frame.add(pane);
         frame.add(sourceLabel);
         frame.add(label);
 
         frame.add(source);
-        frame.add(distLabel);
-//        frame.add(openButton);//adding button in JFrame
 
         EventQueue.invokeLater(() -> {
             runner = new DrawPanelRunner(pane);
@@ -199,16 +181,5 @@ public class Main implements ActionListener {
             t1.start();
 
         });
-
-//
-//        if(pressedNew){
-//
-//            runner = new DrawPanelRunner(pane);
-//            frame.setVisible(true);
-//            Thread t2 = new Thread(runner, "T1");
-//            System.out.println("Thread is starting");
-//            t2.start();
-//            frame.repaint();
-//        }
     }
 }
