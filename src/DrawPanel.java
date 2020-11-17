@@ -7,17 +7,26 @@ Input: The order of cities to simulate travel
 */
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Queue;
+import java.util.Scanner;
 
-class DrawPanel extends JPanel{
+class DrawPanel extends JPanel implements MouseListener {
     private int pos = 0;
-
+    Point point = null;
+    List<String> lines = new ArrayList<String>();
+    String line = null;
     public void setPos(int pos) {
         this.pos = pos;
         repaint();
     }
 
     double cityCoord[][];
+
     int cities[];
     public static Graphics gthis;
     Queue<Integer> cityQueue;
@@ -34,10 +43,12 @@ class DrawPanel extends JPanel{
 
 
     DrawPanel(){
-    }
-    void setCityCoord(double cityCoord[][]){
-        this.cityCoord=cityCoord;
+        addMouseListener(this);
 
+    }
+    void setCityCoord(double cityCoordDraw[][]){
+
+        this.cityCoord=cityCoordDraw;
     }
 
    public void drawLines(Graphics g){
@@ -46,23 +57,16 @@ class DrawPanel extends JPanel{
             return;
         for (int i = 1; i < pos; i++) {
 
-            Dimension size = getSize();
-            Insets insets = getInsets();
-
-            int w = size.width - insets.left - insets.right;
-            int h = size.height - insets.top - insets.bottom;
-
             //City1
-            int x = (int) (Math.abs(Math.ceil(cityCoord[cities[i]][0])) % w);
-            int y = (int) (Math.abs(Math.ceil(cityCoord[cities[i]][1])) % h)+10;
-
+            int x = (int) cityCoord[cities[i]][0];
+            int y = (int) cityCoord[cities[i]][1]+10;
             //City2
-            int x1 = (int) (Math.abs(Math.ceil(cityCoord[cities[i - 1]][0])) % w);
-            int y1 = (int) (Math.abs(Math.ceil(cityCoord[cities[i - 1]][1])) % h)+10;
+            int x1 = (int) cityCoord[cities[i - 1]][0];
+            int y1 = (int) cityCoord[cities[i - 1]][1]+10;
+
 
             Main.countLabel.setText("Cities Travelled:"+pos);
             g2d.drawLine(x, y, x1, y1);
-
         }
     }
 
@@ -75,86 +79,108 @@ class DrawPanel extends JPanel{
         if(cityCoord==null){
             return;
         }
-        for (int i = 0; i < cityCoord.length; i++) {
+            for (int i = 0; i < cityCoord.length; i++) {
 
-            Dimension size = getSize();
-            Insets insets = getInsets();
+//            Dimension size = getSize();
+//            Insets insets = getInsets();
+//
+//            int w = size.width - insets.left - insets.right;
+//                System.out.println(w+" width");
+//            int h = size.height - insets.top - insets.bottom;
+//                System.out.println(h+" height");
 
-            int w = size.width - insets.left - insets.right;
-            int h = size.height - insets.top - insets.bottom;
+            int x = (int) cityCoord[i][0];
+            int y = (int) cityCoord[i][1];
+            gthis.fillRect(x , y, 1, 1);
 
-            int x = (int) (Math.abs(Math.ceil(cityCoord[i][0])) % w);
-            int y = (int) (Math.abs(Math.ceil(cityCoord[i][1])) % h)+10;
             if(cityCoord.length<200)
                 g2d.drawString(Integer.toString(i),x,y);
-            g2d.drawLine(x, y, x, y);
         }
+
+
     }
-
-
 
     @Override
     public void paintComponent(Graphics g) {
+
         gthis=g;
         super.paintComponent(g);
-
         doDrawing(gthis);
         drawLines(gthis);
-    }
 
-}
+        // If user has chosen a point, paint a small dot on top.
 
-class DrawPanelRunner implements Runnable  {
-    public static volatile boolean isStopped = true;
-    public static volatile int numC;
-    public DrawPanel drawlines;
-
-    DrawPanelRunner(DrawPanel drawlines) {
-        this.drawlines = drawlines;
-    }
-
-
-    private void setDrawLines(int pos) {
-        EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                drawlines.setPos(pos);
+        if (point != null) {
+            gthis.fillRect(point.x - 3, point.y - 3, 7, 7);
+        }
+        try {
+            File f1 = new File("newPoints.txt");
+            Scanner myReader = new Scanner(f1);
+            while (myReader.hasNextLine()) {
+                line = myReader.nextLine();
+                lines.add(line);
+                int pointx, pointy;
+                pointx = Integer.parseInt(line.split(" ")[0]);
+                pointy = Integer.parseInt(line.split(" ")[1]);
+                gthis.fillRect(pointx - 3, pointy - 3, 7, 7);
             }
-        });
-    }
-
-    public void setNumC(int num){
-        numC=num;
-    }
-
-    public int getNumC(){
-        return numC;
-    }
-
-    public static void stop(){
-        isStopped = true;
-    }
-    public static void start(){
-        isStopped = false;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Override
-    public void run() {
-        while (true) {
-            for (int i = 1; i < numC; i++) {
-
-                while (isStopped) {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                    }
-                }
-                setDrawLines(i);
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                }
-            }
+    public void mouseClicked(MouseEvent e) {
+//        drawPoint=true;
+        int x = e.getX();
+        int y = e.getY();
+        if (point == null) {
+            point = new Point(x, y);
+        } else {
+            point.x = x;
+            point.y = y;
         }
+
+        //Write new points to a file
+        try
+        {
+            File f1 = new File("newPoints.txt");
+
+            FileWriter fw = new FileWriter(f1,true);
+
+            fw.write(x+ " " +y+" \n");
+            fw.close();
+
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        repaint();
+
     }
+
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
 }
+

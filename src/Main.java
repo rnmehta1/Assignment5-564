@@ -30,6 +30,7 @@ public class Main implements ActionListener {
     static JMenuItem open,save,newProject,run,stop;
     TSPSolver tspSolver;
     TSPNearestNeighbour solve;
+    public static boolean pressedNew=false;
 
     //For the OPen File button
     public void actionPerformed(ActionEvent evt)  {
@@ -47,14 +48,14 @@ public class Main implements ActionListener {
                     BufferedReader br = new BufferedReader(new FileReader(tspFile));
                     tspSolver= new TSPSolver();
                     tspSolver.dataReader(br);
-                    tspSolver.dataGenerator(tspSolver.cityCoord);
+                    tspSolver.dataGenerator(tspSolver.cityCoordDraw);
 
                     // Solve the TSP
                     solve = new TSPNearestNeighbour();
                     solve.tsp(tspSolver.distMat);
-                    pane.setCityCoord(tspSolver.cityCoord);
+                    pane.setCityCoord(tspSolver.cityCoordDraw);
                     pane.setCityQueue(solve.cityQueue);
-                    runner.setNumC(solve.cityQueue.size());
+                    runner.setNumC(solve.cityQueue.size()+solve.newdotCount);
                     pane.repaint();
                     distLabel.setText("Total Distance Travelled:"+solve.getDistance());
 
@@ -73,7 +74,21 @@ public class Main implements ActionListener {
     }
 
     public static void main(String[] args) {
+        try {
+            File myObj = new File("newPoints.txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                myObj.delete();
+                myObj.createNewFile();
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
         Main mainClass = new Main();
+
         frame = new JFrame();//creating instance of JFrame
         frame.setSize(1440, 900);
         frame.setTitle("Travelling Salesman Problem Graph Simulation");
@@ -103,6 +118,25 @@ public class Main implements ActionListener {
 
         // create menuitems
         newProject = new JMenuItem("New");
+
+
+        ActionListener newListener = new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+
+                Thread.currentThread().stop();
+
+                pressedNew=true;
+                runner = new DrawPanelRunner(pane);
+                frame.setVisible(true);
+                Thread t2 = new Thread(runner, "T2");
+                System.out.println("Thread is starting 2");
+                t2.start();
+                frame.repaint();
+            }
+        };
+
+
+        newProject.addActionListener(newListener);
         run = new PlayButton();
 
         stop = new StopButton();
@@ -163,6 +197,18 @@ public class Main implements ActionListener {
             Thread t1 = new Thread(runner, "T1");
             System.out.println("Thread is starting");
             t1.start();
+
         });
+
+//
+//        if(pressedNew){
+//
+//            runner = new DrawPanelRunner(pane);
+//            frame.setVisible(true);
+//            Thread t2 = new Thread(runner, "T1");
+//            System.out.println("Thread is starting");
+//            t2.start();
+//            frame.repaint();
+//        }
     }
 }

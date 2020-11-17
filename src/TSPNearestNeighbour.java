@@ -29,6 +29,7 @@ public class TSPNearestNeighbour extends TSPSolver {
         System.out.println("Cities are visited as:");
         int prev=1;
         numberOfNodes = adjacencyMatrix[1].length - 1;
+        System.out.println("number of nodes"+numberOfNodes);
         int[] visited = new int[numberOfNodes + 1];
         int sourc= Integer.parseInt(source.getText());
         visited[sourc] = 1;
