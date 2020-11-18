@@ -122,9 +122,6 @@ public class TSPSolver extends Main{
         }catch (Exception ex){
 
         }
-        System.out.println("City Co-ordinates draw:");
-//        for(int j=0;j<cityCoordDraw.length;j++)
-//            System.out.println(cityCoordDraw[j][0]+" "+cityCoordDraw[j][1]);
 
         return cityCoordDraw;
     }
@@ -140,14 +137,6 @@ public class TSPSolver extends Main{
                     distMat[i][j] = euclideanDistance(cityCoord[i][0],cityCoord[i][1],cityCoord[j][0],cityCoord[j][1]);
                     distMat[j][i] = distMat[i][j];
                 }
-            }
-        }
-
-        System.out.println("Length of Matrix"+distMat.length+" "+ distMat[0].length);
-        System.out.println("Distance matrix");
-        for(int i=0;i<numCities+newdotCount;i++){
-            for(int j=i;j<numCities+newdotCount;j++) {
-                System.out.println(distMat[i][j]);
             }
         }
 

@@ -16,29 +16,61 @@ import java.util.Queue;
 import java.util.Scanner;
 
 class DrawPanel extends JPanel implements MouseListener {
-    private int pos = 0;
+    private int pos1 = 0, pos2 = 0 ,pos3 = 0;
     Point point = null;
     List<String> lines = new ArrayList<String>();
     String line = null;
-    public void setPos(int pos) {
-        this.pos = pos;
+    Color color1,color2,color3;
+    double cityCoord[][];
+
+    int cities1[],cities2[],cities3[];
+    public static Graphics gthis;
+    Queue<Integer> cityQueue1,cityQueue2,cityQueue3;
+
+
+    public void setPos(int pos, Color color, int idPath) {
+
+        if(idPath==1) {
+            this.pos1 = pos;
+            this.cityQueue1=TSPNearestNeighbour.cityQueue1;
+            int i=0;
+            for(int c: cityQueue1){
+                cities1[i]=c;
+                i++;
+            }
+        } else if (idPath==2){
+            this.pos2 = pos;
+            this.cityQueue2=TSPNearestNeighbour.cityQueue2;
+            int i=0;
+            for(int c: cityQueue2){
+                cities2[i]=c;
+                i++;
+            }
+        } else if (idPath==3){
+            this.pos3 = pos;
+            this.cityQueue3=TSPNearestNeighbour.cityQueue3;
+            int i=0;
+            for(int c: cityQueue3){
+                cities3[i]=c;
+                i++;
+            }
+        }
         repaint();
     }
 
-    double cityCoord[][];
 
-    int cities[];
-    public static Graphics gthis;
-    Queue<Integer> cityQueue;
 
     void setCityQueue(Queue<Integer>cityQueue){
-        this.cityQueue=cityQueue;
-        cities=new int[cityQueue.size()];
-        int i=0;
-        for(int c: cityQueue){
-            cities[i]=c;
-            i++;
-        }
+        this.cityQueue1=cityQueue;
+        cities1=new int[cityQueue1.size()];
+        cities2=new int[cityQueue1.size()];
+        cities3=new int[cityQueue1.size()];
+
+//        int i=0;
+//        for(int c: cityQueue){
+//            cities[i]=c;
+//            i++;
+//        }
     }
 
 
@@ -52,22 +84,61 @@ class DrawPanel extends JPanel implements MouseListener {
     }
 
    public void drawLines(Graphics g){
+       System.out.println("Pos"+pos1+" "+pos2+ " " +pos3);
         Graphics2D g2d = (Graphics2D) g;
-        if(cityQueue==null)
+        if(cityQueue1==null)
             return;
-        for (int i = 1; i < pos; i++) {
+        for (int i = 1; i < pos1; i++) {
 
             //City1
-            int x = (int) cityCoord[cities[i]][0];
-            int y = (int) cityCoord[cities[i]][1]+10;
+            int x = (int) cityCoord[cities1[i]][0];
+            int y = (int) cityCoord[cities1[i]][1]+10;
             //City2
-            int x1 = (int) cityCoord[cities[i - 1]][0];
-            int y1 = (int) cityCoord[cities[i - 1]][1]+10;
+            int x1 = (int) cityCoord[cities1[i - 1]][0];
+            int y1 = (int) cityCoord[cities1[i - 1]][1]+10;
 
 
-            Main.countLabel.setText("Cities Travelled:"+pos);
+            Main.countLabel.setText("Cities Travelled:"+pos1);
+            //set color here
+            g2d.setColor(Color.BLACK);
             g2d.drawLine(x, y, x1, y1);
         }
+
+       if(cityQueue2==null)
+           return;
+       for (int i = 1; i < pos2; i++) {
+
+           //City1
+           int x = (int) cityCoord[cities2[i]][0];
+           int y = (int) cityCoord[cities2[i]][1]+10;
+           //City2
+           int x1 = (int) cityCoord[cities2[i - 1]][0];
+           int y1 = (int) cityCoord[cities2[i - 1]][1]+10;
+
+
+           Main.countLabel.setText("Cities Travelled:"+pos2);
+           //set color here
+           g2d.setColor(Color.green);
+           g2d.drawLine(x, y, x1, y1);
+       }
+       if(cityQueue3==null)
+           return;
+       for (int i = 1; i < pos3; i++) {
+
+           //City1
+
+           int x = (int) cityCoord[cities3[i]][0];
+           int y = (int) cityCoord[cities3[i]][1]+10;
+           //City2
+           int x1 = (int) cityCoord[cities3[i - 1]][0];
+           int y1 = (int) cityCoord[cities3[i - 1]][1]+10;
+
+
+           Main.countLabel.setText("Cities Travelled:"+pos3);
+           //set color here
+           g2d.setColor(Color.yellow);
+           g2d.drawLine(x, y, x1, y1);
+       }
     }
 
 
@@ -81,13 +152,6 @@ class DrawPanel extends JPanel implements MouseListener {
         }
             for (int i = 0; i < cityCoord.length; i++) {
 
-//            Dimension size = getSize();
-//            Insets insets = getInsets();
-//
-//            int w = size.width - insets.left - insets.right;
-//                System.out.println(w+" width");
-//            int h = size.height - insets.top - insets.bottom;
-//                System.out.println(h+" height");
 
             int x = (int) cityCoord[i][0];
             int y = (int) cityCoord[i][1];

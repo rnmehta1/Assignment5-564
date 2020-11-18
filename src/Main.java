@@ -18,7 +18,7 @@ import javax.swing.filechooser.*;
 
 public class Main implements ActionListener {
     static JLabel label;
-    public static DrawPanelRunner runner;
+    public static DrawPanelRunner runner, runner2, runner3;
     public static DrawPanel pane;
 //    static PlayButton playButton;
     public static JFrame frame;
@@ -54,8 +54,8 @@ public class Main implements ActionListener {
                     solve = new TSPNearestNeighbour();
                     solve.tsp(tspSolver.distMat);
                     pane.setCityCoord(tspSolver.cityCoordDraw);
-                    pane.setCityQueue(solve.cityQueue);
-                    runner.setNumC(solve.cityQueue.size()+solve.newdotCount);
+                    pane.setCityQueue(solve.cityQueue1);
+                    runner.setNumC(solve.cityQueue1.size()+solve.newdotCount);
                     pane.repaint();
 
                 } catch (Exception e) {
@@ -187,17 +187,29 @@ public class Main implements ActionListener {
 //        frame.add(countLabel);
         frame.add(pane);
         frame.add(sourceLabel);
-        frame.add(label);
+//        frame.add(label);
 
-        frame.add(source);
+//        frame.add(source);
 
         EventQueue.invokeLater(() -> {
-            runner = new DrawPanelRunner(pane);
+            runner = new DrawPanelRunner(pane, 1);
             frame.setVisible(true);
             Thread t1 = new Thread(runner, "T1");
             System.out.println("Thread is starting");
             t1.start();
 
+            //runner2
+            runner2 = new DrawPanelRunner(pane, 2);
+            frame.setVisible(true);
+            Thread t2 = new Thread(runner2, "T2");
+            System.out.println("Thread is starting");
+            t2.start();
+
+            runner3 = new DrawPanelRunner(pane, 3);
+            frame.setVisible(true);
+            Thread t3 = new Thread(runner3, "T3");
+            System.out.println("Thread is starting");
+            t3.start();
         });
     }
 }
