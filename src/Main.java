@@ -184,7 +184,7 @@ public class Main implements ActionListener {
         pane.setBounds(50,200,1300,560);
 
         //Add all the Swing Components to JFrame
-        frame.add(countLabel);
+//        frame.add(countLabel);
         frame.add(pane);
         frame.add(sourceLabel);
         frame.add(label);

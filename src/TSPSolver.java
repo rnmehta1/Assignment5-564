@@ -130,10 +130,10 @@ public class TSPSolver extends Main{
     }
 
     public double[][] dataGenerator(double cityCoord[][]){
-       distMat = new double[numCities][numCities];
+       distMat = new double[numCities+newdotCount][numCities+newdotCount];
 
         for(int i=0;i<numCities+newdotCount;i++){
-            for(int j=i;j<numCities;j++){
+            for(int j=i;j<numCities+newdotCount;j++){
                 if(i==j){
                     distMat[i][j] = Double.MAX_VALUE;
                 } else{
@@ -142,6 +142,15 @@ public class TSPSolver extends Main{
                 }
             }
         }
+
+        System.out.println("Length of Matrix"+distMat.length+" "+ distMat[0].length);
+        System.out.println("Distance matrix");
+        for(int i=0;i<numCities+newdotCount;i++){
+            for(int j=i;j<numCities+newdotCount;j++) {
+                System.out.println(distMat[i][j]);
+            }
+        }
+
         return distMat;
     }
 }
