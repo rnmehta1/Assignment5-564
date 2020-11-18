@@ -186,7 +186,7 @@ public class Main implements ActionListener {
         //Add all the Swing Components to JFrame
 //        frame.add(countLabel);
         frame.add(pane);
-        frame.add(sourceLabel);
+//        frame.add(sourceLabel);
 //        frame.add(label);
 
 //        frame.add(source);
